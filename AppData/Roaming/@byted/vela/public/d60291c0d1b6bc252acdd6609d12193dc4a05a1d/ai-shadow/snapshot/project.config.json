@@ -1,1 +1,18 @@
-{"appid":"testappId","projectname":"默认小程序名","setting":{"urlCheck":true,"es6":true,"postcss":true,"minified":true,"newFeature":true},"scripts":{"afterOpen":"","beforeCompile":""}}
+{
+  "setting": {
+    "urlCheck": true,
+    "es6": true,
+    "postcss": true,
+    "minified": true,
+    "newFeature": true
+  },
+  "appid": "tt__devtools__",
+  "projectname": "食愈空间站",
+  "miniprogramRoot": "../",
+  "condition": {
+    "miniprogram": {
+      "current": 0,
+      "list": []
+    }
+  }
+}
