@@ -1,2 +1,326 @@
-<!-- c:\Users\hw\Documents\HBuilderProjects\食愈空间站 - 抖音版\dist\dev\mp-toutiao\食愈空间站-抖音版\pages\index\index.ttml -->
-<text>c:\Users\hw\Documents\HBuilderProjects\食愈空间站 - 抖音版\dist\dev\mp-toutiao\食愈空间站-抖音版\pages\index\index.ttml</text>
+<view class="page-index" tt:if="{{pageReady}}">
+  <!-- Hero 头部 -->
+  <view class="hero-header" style="padding-top: {{statusBarHeight}}px;">
+    <view class="hero-gradient"></view>
+    <view class="hero-content">
+      <view class="hero-top">
+        <view class="brand-area">
+          <text class="brand-icon">🌿</text>
+          <view class="brand-text">
+            <text class="brand-name">食愈空间站</text>
+            <text class="brand-slogan">药食同源 · 以食养人</text>
+          </view>
+        </view>
+        <view class="hero-actions">
+          <view class="hero-action-btn" bindtap="goSearch">
+            <text class="hero-search-icon">🔍</text>
+          </view>
+          <view class="hero-action-btn" bindtap="goDistributor">
+            <text>💰</text>
+          </view>
+        </view>
+      </view>
+      <view tt:if="{{currentTerm}}" class="hero-term" bindtap="goAcademy">
+        <text class="hero-term-badge">{{currentTerm.emoji}} {{currentTerm.name}}</text>
+        <text class="hero-term-desc">{{currentTerm.desc}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 主滚动区 -->
+  <scroll-view scroll-y class="main-scroll" style="padding-top: {{heroHeight}}px;" bindscrolltolower="onReachBottom" refresher-enabled="{{true}}" bindrefresherrefresh="onPullDownRefresh">
+    
+    <!-- Banner 轮播 -->
+    <swiper class="banner-swiper" indicator-dots="{{true}}" autoplay="{{true}}" interval="{{4000}}" circular="{{true}}" indicator-active-color="#5B8C5A">
+      <swiper-item tt:for="{{bannerList}}" tt:for-item="item" tt:key="id" bindtap="navigateTo" data-link="{{item.link}}">
+        <view class="banner-item">
+          <view class="banner-placeholder">
+            <text class="banner-icon">🌿</text>
+            <text class="banner-title">{{item.title}}</text>
+            <text class="banner-subtitle">{{item.subtitle}}</text>
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+
+    <!-- 分类导航 -->
+    <view class="category-section card">
+      <scroll-view scroll-x class="category-scroll">
+        <view class="category-list">
+          <view tt:for="{{categories}}" tt:for-item="cat" tt:key="id" class="category-item" bindtap="goCategory" data-catid="{{cat.id}}">
+            <view class="category-icon">{{cat.icon}}</view>
+            <text class="category-name">{{cat.name}}</text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 节气养生 -->
+    <view tt:if="{{currentTerm}}" class="solar-term-section card" bindtap="goAcademy">
+      <view class="st-header">
+        <view class="st-left">
+          <text class="st-emoji">{{currentTerm.emoji}}</text>
+          <view class="st-info">
+            <text class="st-title">今日 · {{currentTerm.name}}</text>
+            <text class="st-season">{{currentTerm.season}}养生</text>
+          </view>
+        </view>
+        <view class="st-badge">
+          <text class="st-badge-text">宜</text>
+        </view>
+      </view>
+      <text class="st-desc">{{currentTerm.desc}}</text>
+      <view class="st-tips">
+        <view class="st-tip-item">
+          <text class="st-tip-label">宜</text>
+          <text class="st-tip-text">{{currentTerm.dos[0]}}、{{currentTerm.dos[1]}}</text>
+        </view>
+        <view class="st-tip-item st-tip-dont">
+          <text class="st-tip-label">忌</text>
+          <text class="st-tip-text">{{currentTerm.donts[0]}}、{{currentTerm.donts[1]}}</text>
+        </view>
+      </view>
+      <scroll-view tt:if="{{termProducts.length > 0}}" scroll-x class="st-product-scroll">
+        <view class="st-product-list">
+          <view tt:for="{{termProducts}}" tt:for-item="item" tt:key="id" class="st-product-card" catchtap="goDetail" data-id="{{item.id}}">
+            <view class="st-product-img">
+              <view class="img-placeholder-sm"><text>🌿</text></view>
+            </view>
+            <text class="st-product-name ellipsis">{{item.name}}</text>
+            <text class="st-product-price price">¥{{item.price}}</text>
+          </view>
+        </view>
+      </scroll-view>
+      <text class="st-footnote">推荐茶饮：{{currentTerm.tea}}</text>
+    </view>
+
+    <!-- 限时秒杀专区 -->
+    <view tt:if="{{seckillProducts.length > 0}}" class="activity-section card">
+      <view class="section-header flex-between">
+        <view class="section-title">
+          <text class="title-icon">⚡</text>
+          <text class="title-text">限时秒杀专区</text>
+        </view>
+        <view class="flash-slot">
+          <text>{{activeSeckillLabel}}</text>
+          <text class="flash-slot-time">{{seckillCountdownText}}</text>
+        </view>
+      </view>
+      <text class="flash-copy">每天固定时段放出特价养生食材，先领券再下单</text>
+      <scroll-view scroll-x class="activity-scroll">
+        <view class="activity-list">
+          <view tt:for="{{seckillProducts}}" tt:for-item="item" tt:key="id" class="activity-card seckill" bindtap="goSeckillDetail" data-id="{{item.id}}">
+            <view class="activity-img">
+              <view class="img-placeholder"><text>🌿</text></view>
+              <view class="flash-badge">秒杀</view>
+            </view>
+            <view class="activity-info">
+              <text class="activity-name ellipsis">{{item.name}}</text>
+              <text class="flash-stock">剩余 {{item.stock}} 份</text>
+              <view class="activity-price-row">
+                <text class="price price-symbol">¥</text>
+                <text class="price price-value">{{item.price}}</text>
+                <text class="price-original">¥{{item.originalPrice}}</text>
+              </view>
+              <view class="activity-progress">
+                <view class="progress-bar">
+                  <view class="progress-fill" style="width: {{item.discount}}%;"></view>
+                </view>
+                <text class="progress-text">{{item.discount}}%OFF</text>
+              </view>
+              <view class="flash-action">立即抢购</view>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 养生爆款 -->
+    <view class="hot-section">
+      <view class="section-header flex-between">
+        <view class="section-title">
+          <text class="title-icon">🔥</text>
+          <text class="title-text">养生爆款</text>
+        </view>
+        <view class="section-more" bindtap="goProductList">
+          <text>更多好物</text>
+          <text>›</text>
+        </view>
+      </view>
+      <view class="product-grid">
+        <view tt:for="{{displayProducts}}" tt:for-item="item" tt:key="id" class="product-card" bindtap="goDetail" data-id="{{item.id}}">
+          <view class="product-img">
+            <view class="img-placeholder"><text>🌿</text></view>
+            <view tt:if="{{item.tags.length > 0}}" class="product-tags">
+              <text tt:for="{{item.tags}}" tt:for-item="tag" tt:key="*this" class="tag {{tag === '热销' ? 'tag-hot' : tag === '新品' ? 'tag-new' : ''}}">{{tag}}</text>
+            </view>
+          </view>
+          <view class="product-info">
+            <text class="product-name ellipsis-2">{{item.name}}</text>
+            <text class="product-subtitle text-sm text-light ellipsis">{{item.subtitle}}</text>
+            <view class="product-bottom flex-between">
+              <view class="product-price">
+                <text class="price price-symbol">¥</text>
+                <text class="price price-value-sm">{{item.price}}</text>
+                <text class="price-original">¥{{item.originalPrice}}</text>
+              </view>
+              <text class="product-sales text-xs text-light">{{item.sales}}人购买</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 今日食疗推荐 -->
+    <view class="recipe-section card">
+      <view class="section-header flex-between mb-20">
+        <view class="section-title">
+          <text class="title-icon">📖</text>
+          <text class="title-text">今日食疗推荐</text>
+        </view>
+        <view class="section-more" bindtap="goRecipeList">
+          <text>更多食谱</text>
+          <text>›</text>
+        </view>
+      </view>
+      <view tt:for="{{recipeList}}" tt:for-item="recipe" tt:key="id" class="recipe-card-horizontal" bindtap="goRecipeDetail" data-id="{{recipe.id}}">
+        <view class="recipe-cover">
+          <view class="img-placeholder-sm"><text>🍲</text></view>
+        </view>
+        <view class="recipe-info">
+          <text class="recipe-name">{{recipe.title}}</text>
+          <text class="recipe-desc text-sm text-light ellipsis-2">{{recipe.description}}</text>
+          <view class="recipe-meta flex">
+            <text class="recipe-tag text-xs">{{recipe.difficulty}}</text>
+            <text class="recipe-tag text-xs">⏱ {{recipe.cookTime}}</text>
+            <text class="recipe-tag text-xs">👥 {{recipe.servings}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 体质智能推荐 -->
+    <view tt:if="{{userConstitution}}" class="constitution-section">
+      <view class="section-header flex-between" style="margin:0 30rpx 20rpx">
+        <view class="section-title">
+          <text class="title-icon">{{userConstitution.emoji}}</text>
+          <text class="title-text">为你推荐 · {{userConstitution.name}}</text>
+        </view>
+        <view class="section-more" bindtap="goFullConstitutionTest">
+          <text>重新测评</text>
+          <text>›</text>
+        </view>
+      </view>
+      <scroll-view scroll-x class="constitution-scroll">
+        <view class="constitution-list">
+          <view tt:for="{{constitutionProducts}}" tt:for-item="item" tt:key="id" class="constitution-card" bindtap="goDetail" data-id="{{item.id}}">
+            <view class="constitution-img">
+              <view class="img-placeholder"><text>🌿</text></view>
+              <view class="constitution-match-badge"><text>适合你</text></view>
+            </view>
+            <view class="constitution-info">
+              <text class="constitution-name ellipsis">{{item.name}}</text>
+              <text class="constitution-reason text-xs text-light ellipsis">{{item.subtitle}}</text>
+              <view class="constitution-price">
+                <text class="price price-symbol">¥</text>
+                <text class="price price-value-sm">{{item.price}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+    <view tt:else class="constitution-prompt card" bindtap="goAcademy" style="margin:0 30rpx 20rpx">
+      <view class="prompt-content">
+        <text class="prompt-icon">🎯</text>
+        <view class="prompt-info">
+          <text class="prompt-title">测测你的体质，获取专属推荐</text>
+          <text class="prompt-desc">中医九种体质辨识，为你匹配最适合的养生好物</text>
+        </view>
+        <view class="prompt-btn"><text>去测试 ›</text></view>
+      </view>
+    </view>
+
+    <!-- 打卡入口 -->
+    <view class="checkin-entry card" bindtap="goCheckin" style="margin:0 30rpx 20rpx">
+      <view class="checkin-entry-top">
+        <view>
+          <text class="checkin-kicker">✅ 食愈打卡成长体系</text>
+          <text class="checkin-title">{{activeCheckinPlan ? activeCheckinPlan.shortTitle + ' · 今天继续坚持' : '先选一个现成计划，今天就开始'}}</text>
+          <text class="checkin-desc">{{activeCheckinPlan ? '去看看进度、奖励和广场互动' : '祛湿、养胃、养颜、早睡 4 套计划都配好了'}}</text>
+        </view>
+        <view class="checkin-badge"><text>去打卡</text></view>
+      </view>
+      <view class="checkin-actions-row">
+        <view class="checkin-action primary"><text>{{activeCheckinPlan ? '去完成今日打卡' : '去挑一个计划'}}</text></view>
+        <view class="checkin-action secondary" catchtap="goPoints"><text>积分中心</text></view>
+      </view>
+    </view>
+
+    <!-- 养生学堂 -->
+    <view class="academy-entry card" bindtap="goAcademy" style="margin:20rpx 30rpx">
+      <view class="academy-banner">
+        <view class="academy-left">
+          <text class="academy-icon">📚</text>
+          <view class="academy-info">
+            <text class="academy-title">养生学堂</text>
+            <text class="academy-desc">中医体质测试 · 养生课程 · 健康知识</text>
+          </view>
+        </view>
+        <view class="academy-right">
+          <view class="academy-btn"><text>进入学堂 ›</text></view>
+        </view>
+      </view>
+      <view class="academy-features">
+        <view class="feature-item"><text class="feature-icon">🎯</text><text class="feature-text">体质测试</text></view>
+        <view class="feature-item"><text class="feature-icon">📖</text><text class="feature-text">图文课程</text></view>
+        <view class="feature-item"><text class="feature-icon">🌿</text><text class="feature-text">食材百科</text></view>
+        <view class="feature-item"><text class="feature-icon">💡</text><text class="feature-text">养生攻略</text></view>
+      </view>
+    </view>
+
+    <!-- 养生小贴士 -->
+    <view class="tips-section card mb-30">
+      <view class="section-header flex-between mb-20">
+        <view class="section-title">
+          <text class="title-icon">💡</text>
+          <text class="title-text">养生小贴士</text>
+        </view>
+      </view>
+      <view tt:for="{{healthTips}}" tt:for-item="tip" tt:key="text" class="tips-item">
+        <text class="tips-dot">•</text>
+        <text class="tips-text">{{tip.text}}</text>
+      </view>
+    </view>
+
+    <view style="height:40rpx"></view>
+  </scroll-view>
+
+  <!-- 新人弹窗 -->
+  <view tt:if="{{showNewcomerPopup}}" class="newcomer-popup">
+    <view class="newcomer-mask" bindtap="dismissNewcomerPopup"></view>
+    <view class="newcomer-panel">
+      <text class="newcomer-kicker">🎁 新人专属福利</text>
+      <text class="newcomer-title">5元无门槛券 + 免费完整版体质测评 + 专属养生手册</text>
+      <text class="newcomer-copy">首次打开小程序自动解锁，新人登录后立即到账</text>
+      <view class="newcomer-benefits">
+        <view class="newcomer-benefit"><text class="newcomer-benefit-icon">🎟️</text><text class="newcomer-benefit-text">5元无门槛优惠券</text></view>
+        <view class="newcomer-benefit"><text class="newcomer-benefit-icon">🧪</text><text class="newcomer-benefit-text">免费完整版体质测评</text></view>
+        <view class="newcomer-benefit"><text class="newcomer-benefit-icon">📖</text><text class="newcomer-benefit-text">专属养生手册</text></view>
+      </view>
+      <view class="newcomer-actions">
+        <view class="newcomer-btn ghost" bindtap="dismissNewcomerPopup">稍后再看</view>
+        <view class="newcomer-btn primary" bindtap="handleNewcomerPrimary">授权登录领取</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 骨架屏 -->
+<view tt:if="{{!pageReady}}" class="page-skeleton">
+  <view class="skeleton-hero"></view>
+  <view class="skeleton-swiper"></view>
+  <view class="skeleton-categories">
+    <view class="skeleton-cat" tt:for="{{[1,2,3,4,5,6,7]}}" tt:key="*this"></view>
+  </view>
+</view>
