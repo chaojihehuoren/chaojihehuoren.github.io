@@ -1,0 +1,252 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/recipe/recipe",
+    "pages/recipe/detail",
+    "pages/cart/cart",
+    "pages/user/user"
+  ],
+  "subPackages": [
+    {
+      "root": "pages/search",
+      "pages": [
+        "index",
+        "search"
+      ]
+    },
+    {
+      "root": "pages/goods",
+      "pages": [
+        "detail"
+      ]
+    },
+    {
+      "root": "pages/order",
+      "pages": [
+        "confirm",
+        "list"
+      ]
+    },
+    {
+      "root": "pages/coupon",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "root": "pages/member",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "root": "pages/aftersale",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "root": "pages/family",
+      "pages": [
+        "index",
+        "checkin"
+      ]
+    },
+    {
+      "root": "pages/test",
+      "pages": [
+        "constitution",
+        "report"
+      ]
+    },
+    {
+      "root": "pages/checkin",
+      "pages": [
+        "index",
+        "square"
+      ]
+    },
+    {
+      "root": "pages/points",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "root": "pages/remind",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "root": "pagesB/recipe",
+      "pages": [
+        "detail"
+      ]
+    },
+    {
+      "root": "pagesA/product",
+      "pages": [
+        "list",
+        "detail"
+      ]
+    },
+    {
+      "root": "pagesA/recipe",
+      "pages": [
+        "detail"
+      ]
+    },
+    {
+      "root": "pagesA/order",
+      "pages": [
+        "confirm",
+        "result"
+      ]
+    },
+    {
+      "root": "pagesA/user",
+      "pages": [
+        "orders",
+        "address",
+        "plan",
+        "favorites",
+        "about"
+      ]
+    },
+    {
+      "root": "pagesA/academy",
+      "pages": [
+        "index",
+        "detail",
+        "quiz"
+      ]
+    },
+    {
+      "root": "pagesA/community",
+      "pages": [
+        "qa",
+        "showwall"
+      ]
+    },
+    {
+      "root": "pagesA/distributor",
+      "pages": [
+        "index",
+        "team",
+        "rank",
+        "earnings",
+        "withdraw",
+        "poster"
+      ]
+    },
+    {
+      "root": "pagesA/service",
+      "pages": [
+        "faq",
+        "reminders",
+        "stores"
+      ]
+    },
+    {
+      "root": "pagesA/agreement",
+      "pages": [
+        "service",
+        "privacy"
+      ]
+    },
+    {
+      "root": "pagesA/login",
+      "pages": [
+        "login"
+      ]
+    }
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "食愈空间站",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "backgroundColor": "#F5F1EB",
+    "backgroundColorTop": "#F5F1EB",
+    "backgroundColorBottom": "#F5F1EB",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#5B8C5A",
+    "borderStyle": "white",
+    "backgroundColor": "#FFFFFF",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/tab-home.png",
+        "selectedIconPath": "static/tab-home-active.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/recipe/recipe",
+        "iconPath": "static/tab-recipe.png",
+        "selectedIconPath": "static/tab-recipe-active.png",
+        "text": "食疗"
+      },
+      {
+        "pagePath": "pages/cart/cart",
+        "iconPath": "static/tab-cart.png",
+        "selectedIconPath": "static/tab-cart-active.png",
+        "text": "购物车"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "iconPath": "static/tab-user.png",
+        "selectedIconPath": "static/tab-user-active.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "preloadRule": {
+    "pages/index/index": {
+      "network": "all",
+      "packages": [
+        "pages/search",
+        "pages/goods",
+        "pagesB/recipe",
+        "pages/checkin",
+        "pages/test",
+        "pagesA/academy"
+      ]
+    },
+    "pages/recipe/recipe": {
+      "network": "all",
+      "packages": [
+        "pagesB/recipe",
+        "pages/goods",
+        "pages/test",
+        "pagesA/academy"
+      ]
+    },
+    "pages/cart/cart": {
+      "network": "all",
+      "packages": [
+        "pages/order",
+        "pages/coupon"
+      ]
+    },
+    "pages/user/user": {
+      "network": "all",
+      "packages": [
+        "pages/family",
+        "pages/member",
+        "pages/remind",
+        "pages/points",
+        "pages/test",
+        "pagesA/academy"
+      ]
+    }
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "用于配送地址定位和附近门店推荐"
+    }
+  },
+  "usingComponents": {}
+}

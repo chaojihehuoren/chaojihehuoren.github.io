@@ -1,10 +1,11 @@
 {
   "setting": {
-    "urlCheck": true,
+    "urlCheck": false,
     "es6": true,
-    "postcss": true,
-    "minified": true,
-    "newFeature": true
+    "postcss": false,
+    "minified": false,
+    "newFeature": true,
+    "enhance": true
   },
   "appid": "tt__devtools__",
   "projectname": "食愈空间站",
@@ -12,7 +13,23 @@
   "condition": {
     "miniprogram": {
       "current": 0,
-      "list": []
+      "list": [
+        {
+          "name": "首页",
+          "id": 0,
+          "pathName": "pages/index/index"
+        },
+        {
+          "name": "体质报告",
+          "id": 1,
+          "pathName": "pages/test/report"
+        },
+        {
+          "name": "打卡广场",
+          "id": 2,
+          "pathName": "pages/checkin/square"
+        }
+      ]
     }
   }
 }

@@ -1,0 +1,178 @@
+
+/* ============================
+   食愈空间站 - 全局样式
+   ============================ */
+page {
+  --color-primary: #5B8C5A;
+  --color-primary-light: #7BAF7A;
+  --color-primary-dark: #4A7349;
+  --color-bg: #F5F1EB;
+  --color-bg-warm: #FAF7F2;
+  --color-brown: #8B6F47;
+  --color-brown-light: #A89070;
+  --color-ochre: #C4956A;
+  --color-text: #333333;
+  --color-text-secondary: #666666;
+  --color-text-light: #999999;
+  --color-border: #E8E2D8;
+  --color-white: #FFFFFF;
+  --color-danger: #E74C3C;
+  --color-warning: #F39C12;
+  --color-success: #27AE60;
+  --radius-sm: 8rpx;
+  --radius-md: 16rpx;
+  --radius-lg: 24rpx;
+  --radius-xl: 32rpx;
+  --shadow-sm: 0 2rpx 8rpx rgba(91,140,90,0.08);
+  --shadow-md: 0 4rpx 16rpx rgba(91,140,90,0.12);
+  --shadow-lg: 0 8rpx 32rpx rgba(91,140,90,0.16);
+
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-size: 28rpx;
+  line-height: 1.6;
+}
+.container {
+  padding: 20rpx 30rpx;
+  box-sizing: border-box;
+}
+.card {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: 24rpx;
+  box-shadow: var(--shadow-sm);
+}
+.price {
+  color: var(--color-danger);
+  font-weight: 600;
+}
+.price-symbol {
+  font-size: 24rpx;
+}
+.price-value {
+  font-size: 36rpx;
+}
+.price-original {
+  color: var(--color-text-light);
+  text-decoration: line-through;
+  font-size: 24rpx;
+  margin-left: 8rpx;
+}
+.tag {
+  display: inline-block;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+  background: rgba(91,140,90,0.1);
+  color: var(--color-primary);
+}
+.tag-hot {
+  background: rgba(231,76,60,0.1);
+  color: var(--color-danger);
+}
+.tag-new {
+  background: rgba(243,156,18,0.1);
+  color: var(--color-warning);
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: 20rpx 60rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  text-align: center;
+}
+.btn-primary::after {
+  border: none;
+}
+.btn-outline {
+  background: transparent;
+  color: var(--color-primary);
+  border: 2rpx solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  padding: 18rpx 58rpx;
+  font-size: 30rpx;
+}
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 0;
+  color: var(--color-text-light);
+}
+.empty-state .icon {
+  font-size: 120rpx;
+  margin-bottom: 20rpx;
+}
+.empty-state .text {
+  font-size: 28rpx;
+}
+.divider {
+  height: 1rpx;
+  background: var(--color-border);
+  margin: 20rpx 0;
+}
+.flex { display: flex;
+}
+.flex-col { flex-direction: column;
+}
+.flex-center { align-items: center; justify-content: center;
+}
+.flex-between { justify-content: space-between; align-items: center;
+}
+.flex-wrap { flex-wrap: wrap;
+}
+.flex-1 { flex: 1;
+}
+.text-center { text-align: center;
+}
+.text-bold { font-weight: 600;
+}
+.text-sm { font-size: 24rpx;
+}
+.text-xs { font-size: 20rpx;
+}
+.text-primary { color: var(--color-primary);
+}
+.text-brown { color: var(--color-brown);
+}
+.text-light { color: var(--color-text-light);
+}
+.mt-10 { margin-top: 10rpx;
+}
+.mt-20 { margin-top: 20rpx;
+}
+.mt-30 { margin-top: 30rpx;
+}
+.mb-10 { margin-bottom: 10rpx;
+}
+.mb-20 { margin-bottom: 20rpx;
+}
+.mb-30 { margin-bottom: 30rpx;
+}
+.ml-10 { margin-left: 10rpx;
+}
+.mr-10 { margin-right: 10rpx;
+}
+.p-20 { padding: 20rpx;
+}
+.p-30 { padding: 30rpx;
+}
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ellipsis-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+page{--status-bar-height:25px;--top-window-height:0px;--window-top:0px;--window-bottom:0px;--window-left:0px;--window-right:0px;--window-magin:0px}[bind-data-c-h="true"]{display: none !important;}
