@@ -2,6 +2,23 @@
 Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
 const common_vendor = require("./common/vendor.js");
 require("./utils/wxPolyfill.js");
+
+/* 兼容微信小程序 showShareMenu 参数到抖音小程序 */
+(function patchShowShareMenu() {
+  if (typeof tt !== 'undefined' && tt.showShareMenu) {
+    const _originalShowShareMenu = tt.showShareMenu;
+    const MENU_MAP = { shareAppMessage: 'share', shareTimeline: 'record' };
+    tt.showShareMenu = function (options) {
+      if (options && options.menus && Array.isArray(options.menus)) {
+        options = Object.assign({}, options);
+        options.menus = options.menus.map(function (m) {
+          return MENU_MAP[m] || m;
+        });
+      }
+      return _originalShowShareMenu.call(tt, options);
+    };
+  }
+})();
 const store_app = require("./store/app.js");
 const store_commerce = require("./store/commerce.js");
 const store_user = require("./store/user.js");
@@ -115,10 +132,18 @@ const _sfc_main = {
       appStore.initNetworkWatcher();
     }
     function syncCommerceLifecycle({ showToast = false } = {}) {
-      const userStore = store_user.useUserStore();
-      const commerceStore = store_commerce.useCommerceStore();
-      commerceStore.markFirstOpen();
-      commerceStore.processLifecycle(userStore, { showToast });
+      try {
+        const userStore = store_user.useUserStore();
+        const commerceStore = store_commerce.useCommerceStore();
+        if (commerceStore && commerceStore.markFirstOpen) {
+          commerceStore.markFirstOpen();
+        }
+        if (commerceStore && commerceStore.processLifecycle) {
+          commerceStore.processLifecycle(userStore, { showToast });
+        }
+      } catch (err) {
+        console.warn('[App] syncCommerceLifecycle error (non-fatal):', err && err.errMsg || err);
+      }
     }
     function startReminderPolling() {
       stopReminderPolling();
