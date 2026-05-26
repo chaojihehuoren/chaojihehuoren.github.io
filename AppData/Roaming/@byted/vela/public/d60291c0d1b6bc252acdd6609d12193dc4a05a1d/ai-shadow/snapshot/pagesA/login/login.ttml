@@ -1,2 +1,96 @@
-<!-- c:\Users\hw\Documents\HBuilderProjects\食愈空间站 - 抖音版\dist\dev\mp-toutiao\食愈空间站-抖音版\pagesA\login\login.ttml -->
-<text>c:\Users\hw\Documents\HBuilderProjects\食愈空间站 - 抖音版\dist\dev\mp-toutiao\食愈空间站-抖音版\pagesA\login\login.ttml</text>
+<view class="login-page">
+  <view class="login-header">
+    <view class="back-btn" tt:if="{{canGoBack}}" bindtap="handleGoBack">
+      <view class="back-icon"></view>
+    </view>
+  </view>
+
+  <view class="login-body">
+    <view class="brand-area">
+      <view class="brand-icon">
+        <text class="brand-icon-text">食</text>
+      </view>
+      <view class="brand-name">食愈空间站</view>
+      <view class="brand-slogan">以食养身，以愈养心</view>
+    </view>
+
+    <view class="auth-notice card">
+      <text class="notice-title">授权与隐私说明</text>
+      <text class="notice-copy">- 抖音授权仅用于账号登录与个性化食疗方案</text>
+      <text class="notice-copy">- 体质档案与订单信息仅在你主动使用对应功能时调用</text>
+      <text class="notice-copy">- 也可使用手机号验证码方式登录</text>
+    </view>
+
+    <view class="login-card">
+      <view class="card-title">欢迎登录</view>
+      <view class="card-desc">授权登录后，为您提供个性化食疗方案</view>
+
+      <button class="douyin-login-btn {{isLoading ? 'login-btn-loading' : ''}}" open-type="getUserInfo" bindgetuserinfo="handleGetUserInfo" disabled="{{isLoading}}">
+        <image tt:if="{{!isLoading}}" class="douyin-icon" src="/static/douyin-icon.png" mode="aspectFit"></image>
+        <text class="btn-text">{{isLoading ? '登录中...' : '抖音一键登录'}}</text>
+      </button>
+
+      <view class="divider-row">
+        <view class="divider-line"></view>
+        <text class="divider-text">或使用手机号登录</text>
+        <view class="divider-line"></view>
+      </view>
+
+      <view class="form-group">
+        <view class="form-input">
+          <text class="input-prefix">+86</text>
+          <input class="input-field" type="number" placeholder="请输入手机号" maxlength="11" bindinput="handlePhoneInput" value="{{phone}}" />
+        </view>
+      </view>
+
+      <view class="form-group">
+        <view class="form-input">
+          <input class="input-field" type="number" placeholder="请输入验证码" maxlength="6" bindinput="handleCodeInput" value="{{code}}" />
+          <view class="code-btn {{codeCooldown > 0 ? 'code-btn-disabled' : ''}}" bindtap="handleSendCode">
+            <text>{{codeBtnText}}</text>
+          </view>
+        </view>
+      </view>
+
+      <button class="phone-login-btn {{isLoading ? 'login-btn-loading' : ''}}" bindtap="handlePhoneLogin" disabled="{{isLoading}}">
+        <text class="btn-text">{{isLoading ? '登录中...' : '登录 / 注册'}}</text>
+      </button>
+
+      <view class="agreement-row" bindtap="handleAgreementToggle">
+        <view class="checkbox-area">
+          <view class="checkbox {{agreementChecked ? 'checkbox-checked' : ''}}">
+            <text tt:if="{{agreementChecked}}" class="check-mark">✓</text>
+          </view>
+        </view>
+        <view class="agreement-text">
+          <text>我已阅读并同意</text>
+          <text class="link-text" catch:tap="navigateToService">《用户服务协议》</text>
+          <text>和</text>
+          <text class="link-text" catch:tap="navigateToPrivacy">《隐私政策》</text>
+        </view>
+      </view>
+
+      <view tt:if="{{showAgreementError}}" class="agreement-error">请先阅读并同意相关协议</view>
+    </view>
+  </view>
+
+  <view class="login-footer">
+    <text class="footer-text">登录后即可体验全部功能</text>
+  </view>
+
+  <!-- 隐私协议弹窗 -->
+  <view class="privacy-popup-mask" tt:if="{{showPrivacyPopup}}" catch:tap="">
+    <view class="privacy-popup">
+      <view class="privacy-popup-title">用户隐私保护提示</view>
+      <view class="privacy-popup-body">
+        <text>感谢您使用食愈空间站，我们非常重视您的个人信息和隐私保护。在您使用本小程序前，请仔细阅读</text>
+        <text class="privacy-link" bindtap="handleOpenPrivacyContract">{{privacyContractName}}</text>
+        <text>。您同意后，我们将按此协议处理您的相关信息。</text>
+      </view>
+      <view class="privacy-popup-btns">
+        <button class="privacy-btn-agree" open-type="agreePrivacyAuthorization" bindagreeprivacyauthorization="handleAgreePrivacyAuthorization">同意</button>
+        <view class="privacy-btn-deny" bindtap="handleGoBack">拒绝并退出</view>
+      </view>
+    </view>
+  </view>
+</view>

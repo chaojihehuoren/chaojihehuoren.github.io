@@ -7,7 +7,7 @@
     "newFeature": true,
     "enhance": true
   },
-  "appid": "tt__devtools__",
+  "appid": "testAppId",
   "projectname": "食愈空间站",
   "miniprogramRoot": "../",
   "condition": {
