@@ -19,6 +19,30 @@ require("./utils/wxPolyfill.js");
     };
   }
 })();
+
+/* 全局拦截 navigateTo：自动将 tabBar 页面跳转转换为 switchTab */
+(function patchNavigateTo() {
+  if (typeof tt !== 'undefined' && tt.navigateTo) {
+    const _originalNavigateTo = tt.navigateTo;
+    const TABBAR_PAGES = [
+      '/pages/index/index',
+      '/pages/recipe/recipe',
+      '/pages/cart/cart',
+      '/pages/user/user'
+    ];
+    function isTabbarPage(url) {
+      if (!url) return false;
+      const path = url.split('?')[0];
+      return TABBAR_PAGES.indexOf(path) !== -1;
+    }
+    tt.navigateTo = function (options) {
+      if (options && options.url && isTabbarPage(options.url)) {
+        return tt.switchTab({ url: options.url });
+      }
+      return _originalNavigateTo.call(tt, options);
+    };
+  }
+})();
 const store_app = require("./store/app.js");
 const store_commerce = require("./store/commerce.js");
 const store_user = require("./store/user.js");
