@@ -1,0 +1,27 @@
+# 这个工作流的名字：SonarQube代码扫描
+name: SonarQube代码扫描
+
+# 触发条件：当代码推送到 main 分支，或者有人发起合并请求时，自动执行扫描
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# 要执行的任务
+jobs:
+  sonarcloud:
+    name: SonarQube扫描
+    runs-on: ubuntu-latest  # 在最新版Ubuntu系统上运行
+    steps:
+      # 第一步：拉取你的代码
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 必须写，用于完整分析代码历史
+
+      # 第二步：执行SonarQube代码扫描
+      - name: 执行SonarQube扫描
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub自动提供的令牌
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}    # 你刚才添加的SonarQube令牌
